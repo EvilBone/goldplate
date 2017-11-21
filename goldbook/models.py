@@ -52,6 +52,7 @@ class Book(models.Model):
     book_binding = models.CharField(max_length=25, verbose_name='装帧', blank=True, null=True)
     book_douban_score = models.FloatField(verbose_name='豆瓣评分', blank=True, null=True)
     book_create_time = models.DateTimeField(verbose_name='添加时间', auto_created=True, auto_now_add=True)
+    book_douban_url = models.URLField(verbose_name='豆瓣链接',default='')
 
     def get_lowest_price(self):
         if len(PlatBookInfo.objects.filter(book=self))>0:
