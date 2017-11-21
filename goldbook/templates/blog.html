@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}骨鱼{% endblock %}
+{% block content %}
+    <div class="container-fluid" style="padding-top: 50px">
+    <div class="row">
+        <div class="panel panel-default col-lg-9 col-lg-offset-1">
+            <div class="panel-body">
+                <h4><strong>{{ blog.blog_title }}</strong></h4>
+                <hr>
+                {{ blog.blog_content | safe }}
+            </div>
+        </div>
+        </div>
+    </div>
+{% endblock %}

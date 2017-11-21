@@ -1,0 +1,76 @@
+navbar-nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.navbar-brand {
+    height: 15px;
+    padding-top: 10px;
+    color: #fff;
+}
+
+.navbar-brand > a:focus, a:hover {
+    color: #000;
+}
+
+.navbar {
+    min-height: 15px;
+    background-color: #2e6da4;
+}
+
+.navbar-toggle {
+    margin-top: 4px;
+    margin-bottom: 4px;
+}
+
+.list-group-item {
+    border: 0px solid #ddd;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.panel {
+    border-radius: 0px;
+}
+
+.panel-default > .panel-heading {
+    color: #333;
+    background-color: #fff;
+    border-color: #000;
+}
+
+.searchbox {
+    border: 2px solid #2a92ff;
+    border-right: none;
+    outline: 0 none;
+    font-size: 18px;
+    background-color: #FFFFFF;
+    width: 752px;
+    height: 48px;
+    line-height: 48px;
+    color: #999999;
+    float: left;
+    padding: 0px 60px;
+    font-family: "Microsoft YaHei";
+    background-position: -474px -68px;
+}
+
+.searchmini{
+    border: 2px solid #2a92ff;
+    border-right: none;
+    outline: 0 none;
+    font-size: 14px;
+    background: #FFFFFF;
+    width: 488px;
+    height: 34px;
+    line-height: 34px;
+    color: #A9A9A9;
+    float: left;
+    padding: 0px 12px;
+}
+.binfo{
+    margin: 5px;
+}
+.lprice{
+    color:red;
+}

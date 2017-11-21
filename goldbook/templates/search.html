@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}搜索结果{% endblock %}
+{% block content %}
+    <div class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="/"><img height="50" src='{% static "images/logo_m.png" %}'></a>
+            </div>
+            <form method="post" action="{% url 'search' %}" class="navbar-form col-lg-10"
+                  style="width: 700px;margin-top: 16px">
+                <div class="input-group col-lg-12">
+                    <input type="text" name="key" class="form-control searchmini" placeholder="ISBN 书名 作者">
+                    <span class="input-group-btn">
+                <button class="btn btn-info" type="submit">搜&nbsp&nbsp&nbsp&nbsp索</button>
+                </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-10 col-lg-offset-1" style="padding-top: 90px">
+        <ul class="list-group">
+            {% for book in books %}
+                <div class="list-group-item row">
+                    <div class="col-lg-2">
+                        <a href="{{ book.book_imageurl }}">
+                            <img class="img-responsive" src="{{ book.book_imageurl }}"  >
+                        </a>
+                    </div>
+                    <div class="col-lg-6">
+                        <h4><strong>{{ book.book_name }}</strong></h4>
+                        <p class="binfo">作者：{{ book.get_authors }}</p>
+                        <p class="binfo">出版社：{{ book.get_pubs }}</p>
+                        <p class="binfo">豆瓣评分：{{ book.book_douban_score }}</p>
+                        <p class="binfo">定价：{{ book.book_retail_price }}</p>
+                        <p class="binfo">出版时间：{{ book.book_pub_date }}</p>
+                    </div>
+                <div class="col-lg-4">
+                        <h4 class="lprice">全网最低价：<strong>{{ book.get_lowest_price }}</strong></h4>
+                    </div>
+                </div>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}
