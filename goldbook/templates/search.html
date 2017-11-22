@@ -7,7 +7,7 @@
             <div class="navbar-header">
                 <a href="/"><img height="50" src='{% static "images/logo_m.png" %}'></a>
             </div>
-            <form method="post" action="{% url 'search' %}" class="navbar-form col-lg-10"
+            <form method="get" action="{% url 'search' %}" class="navbar-form col-lg-10"
                   style="width: 700px;margin-top: 16px">
                 <div class="input-group col-lg-12">
                     <input type="text" name="key" class="form-control searchmini" placeholder="ISBN 书名 作者">
@@ -18,13 +18,13 @@
             </form>
         </div>
     </div>
-    <div class="col-lg-10 col-lg-offset-1" style="padding-top: 90px">
+    <div class="col-lg-9 col-lg-offset-1" style="padding-top: 90px">
         <ul class="list-group">
             {% for book in books %}
                 <div class="list-group-item row">
                     <div class="col-lg-2">
                         <a href="{{ book.book_imageurl }}">
-                            <img class="img-responsive" src="{{ book.book_imageurl }}"  >
+                            <img class="img-responsive" src="{{ book.book_imageurl }}">
                         </a>
                     </div>
                     <div class="col-lg-6">
@@ -34,12 +34,46 @@
                         <p class="binfo">豆瓣评分：{{ book.book_douban_score }}</p>
                         <p class="binfo">定价：{{ book.book_retail_price }}</p>
                         <p class="binfo">出版时间：{{ book.book_pub_date }}</p>
+                        <p class="binfo">ISBN：{{ book.book_isbn }}</p>
                     </div>
-                <div class="col-lg-4">
-                        <h4 class="lprice">全网最低价：<strong>{{ book.get_lowest_price }}</strong></h4>
+                    <div class="col-lg-4">
+                        <h4 class="lprice ">
+                            全网最低价：<strong>{{ book.get_lowest_price.price }} 元</strong></h4>
+                        <ul class="list-group">
+                            {% for flat in book.get_lowest_list %}
+                                {% if flat.plat == 'jd' %}
+                                    <li class="list-group-item container">
+                                        <div class="text-left col-lg-4">
+                                            <a href="{{ flat.link }}">
+                                                <img width="20" src="{% static 'images/jd.gif' %}">&nbsp;&nbsp;京东</a>
+                                        </div>
+                                        <div class="text-center col-lg-3" class="lprice">{{ flat.price }} 元
+                                        </div>
+                                        <div class="col-lg-5">
+                                            <a href="{{ flat.link }}" class="lprice">
+                                                <small>前往购买>></small>
+                                            </a>
+                                        </div>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
                     </div>
                 </div>
             {% endfor %}
         </ul>
+        <nav aria-label="...">
+            <ul class="pager">
+                {% if books.has_previous %}
+                    <li class="previous"><a href="?page={{ books.previous_page_number }}"><span aria-hidden="true">&larr;</span>
+                        上一页</a></li>
+                {% endif %}
+                {% if books.has_next %}
+                    <li class="next"><a href="?page={{ books.next_page_number }}">下一页 <span
+                            aria-hidden="true">&rarr;</span></a></li>
+                {% endif %}
+            </ul>
+        </nav>
     </div>
+
 {% endblock %}

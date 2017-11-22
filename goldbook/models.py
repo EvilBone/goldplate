@@ -31,6 +31,7 @@ class Publisher(models.Model):
 class Eplatform(models.Model):
     plat_code = models.CharField(max_length=5, verbose_name='平台代码')
     plat_name = models.CharField(max_length=20, verbose_name='平台名称')
+    plat_icon = models.ImageField(verbose_name='图标')
 
     class Meta:
         verbose_name = '电商平台'
@@ -39,6 +40,11 @@ class Eplatform(models.Model):
     def __str__(self):
         return self.plat_name
 
+class PlatPrice:
+    def __init__(self,plat='',price=0,link=''):
+        self.plat = plat
+        self.price = price
+        self.link = link
 
 # 书
 class Book(models.Model):
@@ -55,17 +61,34 @@ class Book(models.Model):
     book_douban_url = models.URLField(verbose_name='豆瓣链接',default='')
 
     def get_lowest_price(self):
+        jdplat = PlatPrice()
         if len(PlatBookInfo.objects.filter(book=self))>0:
-            platprice = PlatBookInfo.objects.filter(book=self).order_by('book_price')[0].book_price
+            jdplat.plat = 'jd'
+            platinfo = PlatBookInfo.objects.filter(book=self, plat__plat_code__exact='jd').order_by('book_price')[0]
+            jdplat.link = platinfo.book_url
+            jdplat.price = platinfo.book_price
         else:
-            platprice = self.book_retail_price
-        return platprice
+            jdplat.price = self.book_retail_price
+        return jdplat
+
+    def get_lowest_list(self):
+        list = []
+        if len(PlatBookInfo.objects.filter(book=self))>0:
+            jdplat = PlatPrice()
+            platinfo = PlatBookInfo.objects.filter(book=self,plat__plat_code__exact='jd').order_by('book_price')[0]
+            jdplat.plat = 'jd'
+            jdplat.link = platinfo.book_url
+            jdplat.price = platinfo.book_price
+            list.append(jdplat)
+        return list
 
     def get_authors(self):
         s = ''
         for a in self.book_author.all():
             s += a.author_name + ' ，'
         return s[0:-1]
+
+    get_authors.short_description = u"作者"
 
     def get_pubs(self):
         s = ''
@@ -83,8 +106,9 @@ class Book(models.Model):
 
 # 平台上书的信息
 class PlatBookInfo(models.Model):
-    plat = models.ForeignKey(Eplatform)
-    book = models.ForeignKey(Book)
+    plat = models.ForeignKey(Eplatform,verbose_name='平台')
+    product_id = models.CharField(max_length=50,verbose_name='商品编号')
+    book = models.ForeignKey(Book,verbose_name='书名')
     book_price = models.FloatField(verbose_name='平台价格', null=True, blank=True, default=0)
     book_url = models.URLField(verbose_name='商品链接', null=True, blank=True)
     book_update_time = models.DateTimeField(verbose_name='更新时间', auto_now=True)
