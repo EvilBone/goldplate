@@ -25,7 +25,7 @@ headers = {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,imag
            "Accept-Language": "zh-CN,zh;q=0.9,en;q=0.8",
            "Cache-Control": "max-age=0",
            "Connection": "keep-alive",
-            "Cookie": 'll="118281"; bid=QQRbU1re32M; _ga=GA1.2.648342788.1510899517; gr_user_id=906381be-f457-41eb-afa2-313036fd731d; ct=y; __ads_session=Ppk4vjQZAgnlZDEPAgA=; ps=y; ap=1; gr_session_id_22c937bbd8ebd703f2d8e9445f7dfd03=108326c4-8ae3-4eb5-b3f9-84b6814e583d; gr_cs1_108326c4-8ae3-4eb5-b3f9-84b6814e583d=user_id%3A1; _vwo_uuid_v2=0D5955FFEC30375C21D8DD4B65509979|d5dfa2a25a1e3343a31451ba1c7a29a2; ue="bonehj@163.com"; dbcl2="49809803:8fUcBkgHdek"; ck=HSuU; __utma=30149280.648342788.1510899517.1511316894.1511326867.13; __utmb=30149280.56.10.1511326867; __utmc=30149280; __utmz=30149280.1511257221.10.6.utmcsr=baidu|utmccn=(organic)|utmcmd=organic; __utmv=30149280.4980; push_noty_num=0; push_doumail_num=0',
+            "Cookie": 'bid=tgbhHZO5PVw; __yadk_uid=BlhKnUn13FPc6owgRTcqT6iZgRj3S3RF; ll="118281"; gr_user_id=417289e4-7044-41ae-8344-71d7f7f99931; ct=y; _vwo_uuid_v2=CCC6FD7C6A035FAF47ADAC901722E368|596e98a45b482829b46325dba81ccb24; _pk_ref.100001.8cb4=%5B%22%22%2C%22%22%2C1511438544%2C%22https%3A%2F%2Fwww.baidu.com%2Flink%3Furl%3D0oakurZJiLU2hMwL6Xf4rySuKjx1q3d4ZA4kWWDVN_tQ7AjxGQWblLNE_Iv3Lg8V%26wd%3D%26eqid%3Ddd0e9f7700012497000000065a030814%22%5D; __utmt=1; _ga=GA1.2.500543430.1506817525; _gid=GA1.2.1212025567.1511438546; _gat_UA-7019765-1=1; dbcl2="49809803:8fUcBkgHdek"; ck=HSuU; _pk_id.100001.8cb4=cf13c82013d581b9.1506817524.10.1511438549.1511266868.; _pk_ses.100001.8cb4=*; push_doumail_num=0; __utma=30149280.500543430.1506817525.1511266868.1511438546.10; __utmb=30149280.3.10.1511438546; __utmc=30149280; __utmz=30149280.1509634058.7.6.utmcsr=baidu|utmccn=(organic)|utmcmd=organic; __utmv=30149280.4980; ap=1; push_noty_num=0',
            "Upgrade-Insecure-Requests": "1",
            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.62 Safari/537.36"}
 
@@ -134,7 +134,7 @@ def douban_book_spider():
     # 豆瓣图书标签网址集合
     taglist = []
 
-    resp = requests.get(url=start_url, headers=headers)
+    resp = requests.get(url=start_url,headers=headers)
 
     soup = bs(resp.text, 'lxml')
 

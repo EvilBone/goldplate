@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# @Time    : 2017/11/22 14:50
+# @Time    : 2017/11/23 20:45
 # @Author  : Bone
 # @Site    : 
-# @File    : spider_jd.py
+# @File    : spider_dangdang.py
 # @Software: PyCharm
 
 import re
@@ -31,17 +31,17 @@ headers = {"Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,imag
 
 
 def spider_jd_search_url(key,book,eplat):
-    search_url = 'https://search.jd.com/Search?keyword='+key
-    resp = requests.get(search_url,headers=headers)
+    search_url = 'http://search.dangdang.com/?key='+key+'&show=big'
+    print(search_url)
+    resp = requests.get(search_url)
     soup = bs(resp.text,'lxml')
-
-
-    results = soup.find_all(class_='gl-item')
-
+    results = soup.find_all('li',class_=re.compile('line'))
     for sd in results:
-        product_id = sd.get('data-sku')
-        product_url = 'https:'+sd.find('div',class_='p-img').find('a').get('href')
-        product_price =sd.find('div',class_='p-price').find('i').text
+        # print(sd)
+        product_id = sd.get('id')
+        product_url = sd.find('a',class_='pic').get('href')
+        product_price =sd.find('span',class_='price_n').text.replace('¥','')
+        print(product_price)
         if not re.match(r"\d+\.?\d*", product_price):
             product_price = 0
         if PlatBookInfo.objects.filter(book=book,plat=eplat,product_id=product_id).exists():
@@ -58,8 +58,8 @@ def spider_jd_search_url(key,book,eplat):
             product.save()
 
 if __name__ == '__main__':
-    books = Book.objects.filter(book_is_update_jd=False)
-    plat = Eplatform.objects.get(plat_code='jd')
+    books = Book.objects.filter(book_is_update_dd=False)
+    plat = Eplatform.objects.get(plat_code='dd')
     for book in books:
         isbn = book.book_isbn
         print(isbn)

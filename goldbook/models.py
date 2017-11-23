@@ -59,12 +59,14 @@ class Book(models.Model):
     book_douban_score = models.FloatField(verbose_name='豆瓣评分', blank=True, null=True)
     book_create_time = models.DateTimeField(verbose_name='添加时间', auto_created=True, auto_now_add=True)
     book_douban_url = models.URLField(verbose_name='豆瓣链接',default='')
+    book_is_update_jd= models.BooleanField(verbose_name='是否更新',default=False)
+    book_is_update_dd = models.BooleanField(verbose_name='是否更新', default=False)
 
     def get_lowest_price(self):
         jdplat = PlatPrice()
         if len(PlatBookInfo.objects.filter(book=self))>0:
-            jdplat.plat = 'jd'
-            platinfo = PlatBookInfo.objects.filter(book=self, plat__plat_code__exact='jd').order_by('book_price')[0]
+            platinfo = PlatBookInfo.objects.filter(book=self).order_by('book_price')[0]
+            jdplat.plat = platinfo.plat.plat_code
             jdplat.link = platinfo.book_url
             jdplat.price = platinfo.book_price
         else:
@@ -73,10 +75,17 @@ class Book(models.Model):
 
     def get_lowest_list(self):
         list = []
-        if len(PlatBookInfo.objects.filter(book=self))>0:
+        if len(PlatBookInfo.objects.filter(book=self,plat__plat_code='jd'))>0:
             jdplat = PlatPrice()
-            platinfo = PlatBookInfo.objects.filter(book=self,plat__plat_code__exact='jd').order_by('book_price')[0]
-            jdplat.plat = 'jd'
+            platinfo = PlatBookInfo.objects.filter(book=self,plat__plat_code='jd').order_by('book_price')[0]
+            jdplat.plat = platinfo.plat.plat_code
+            jdplat.link = platinfo.book_url
+            jdplat.price = platinfo.book_price
+            list.append(jdplat)
+        if len(PlatBookInfo.objects.filter(book=self,plat__plat_code='dd'))>0:
+            jdplat = PlatPrice()
+            platinfo = PlatBookInfo.objects.filter(book=self,plat__plat_code='dd').order_by('book_price')[0]
+            jdplat.plat = platinfo.plat.plat_code
             jdplat.link = platinfo.book_url
             jdplat.price = platinfo.book_price
             list.append(jdplat)

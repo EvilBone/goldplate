@@ -22,6 +22,7 @@ def search(request):
         else:
             allbooks = Book.objects.filter(
                 Q(book_name__icontains=key) | Q(book_isbn__icontains=key) | Q(book_author__author_name__contains=key))
+        count = len(allbooks)
         paginator = Paginator(allbooks, 25)
         page = request.GET.get('page')
         try:
@@ -32,4 +33,4 @@ def search(request):
         except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
             books = paginator.page(paginator.num_pages)
-        return render(request, 'search.html', {'books': books,'key':key})
+        return render(request, 'search.html', {'books': books,'key':key,'count':count})

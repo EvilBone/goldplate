@@ -6,6 +6,7 @@ from goldbook.models import Book, Author, Publisher, Eplatform, PlatBookInfo
 
 class BookAdmin(admin.ModelAdmin):
     list_display = ('book_isbn','book_name','get_authors','book_retail_price','book_pub_date','book_douban_score')
+    search_fields = ('book_isbn','book_name')
 
 class AuthorAdmin(admin.ModelAdmin):
     list_display = ('author_name','author_name_en',)
