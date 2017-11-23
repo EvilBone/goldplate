@@ -75,13 +75,26 @@ WSGI_APPLICATION = 'goldplate.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'goldplate',  # 数据库名
+        'USER': 'root',  # 用户名
+        'PASSWORD': 'hujie2007',  # 密码
+        'HOST': 'localhost',  # 数据库主机，默认为localhost
+        'PORT': '3306',
+        'OPTIONS': {
+             'autocommit': True,
+        },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

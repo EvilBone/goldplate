@@ -10,7 +10,7 @@
             <form method="get" action="{% url 'search' %}" class="navbar-form col-lg-10"
                   style="width: 700px;margin-top: 16px">
                 <div class="input-group col-lg-12">
-                    <input type="text" name="key" class="form-control searchmini" placeholder="ISBN 书名 作者">
+                    <input type="text" name="key" class="form-control searchmini" placeholder="ISBN 书名 作者" value="{{ key }}">
                     <span class="input-group-btn">
                 <button class="btn btn-info" type="submit">搜&nbsp&nbsp&nbsp&nbsp索</button>
                 </span>
@@ -21,7 +21,7 @@
     <div class="col-lg-9 col-lg-offset-1" style="padding-top: 90px">
         <ul class="list-group">
             {% for book in books %}
-                <div class="list-group-item row">
+                <div class="list-group-item row" style="padding-right: 0px;padding-left: 0px">
                     <div class="col-lg-2">
                         <a href="{{ book.book_imageurl }}">
                             <img class="img-responsive" src="{{ book.book_imageurl }}">
@@ -42,18 +42,13 @@
                         <ul class="list-group">
                             {% for flat in book.get_lowest_list %}
                                 {% if flat.plat == 'jd' %}
-                                    <li class="list-group-item container">
-                                        <div class="text-left col-lg-4">
-                                            <a href="{{ flat.link }}">
-                                                <img width="20" src="{% static 'images/jd.gif' %}">&nbsp;&nbsp;京东</a>
-                                        </div>
-                                        <div class="text-center col-lg-3" class="lprice">{{ flat.price }} 元
-                                        </div>
-                                        <div class="col-lg-5">
-                                            <a href="{{ flat.link }}" class="lprice">
-                                                <small>前往购买>></small>
-                                            </a>
-                                        </div>
+                                    <li class="list-group-item" style="padding: 10px">
+                                        <a href="{{ flat.link }}" class="col-lg-5">
+                                            <img width="20" src="{% static 'images/jd.gif' %}">&nbsp;&nbsp;京东</a>
+                                        <div class="col-lg-4 lprice">{{ flat.price }} 元 </div>
+                                        <a href="{{ flat.link }}"  style="margin-top: 10px" >
+                                            <small>前往购买>></small>
+                                        </a>
                                     </li>
                                 {% endif %}
                             {% endfor %}
@@ -65,11 +60,11 @@
         <nav aria-label="...">
             <ul class="pager">
                 {% if books.has_previous %}
-                    <li class="previous"><a href="?page={{ books.previous_page_number }}"><span aria-hidden="true">&larr;</span>
+                    <li class="previous"><a href="?key={{ key }}&page={{ books.previous_page_number }}"><span aria-hidden="true">&larr;</span>
                         上一页</a></li>
                 {% endif %}
                 {% if books.has_next %}
-                    <li class="next"><a href="?page={{ books.next_page_number }}">下一页 <span
+                    <li class="next"><a href="?key={{ key }}&page={{ books.next_page_number }}">下一页 <span
                             aria-hidden="true">&rarr;</span></a></li>
                 {% endif %}
             </ul>

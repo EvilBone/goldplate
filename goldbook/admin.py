@@ -19,6 +19,7 @@ class EplatformAdmin(admin.ModelAdmin):
 class PlatBookInfoAdmin(admin.ModelAdmin):
     list_display = ('book','plat','product_id','book_price','book_url','book_update_time')
     list_filter = ('plat',)
+    search_fields = ('book','isbn')
 
 admin.site.register(Book,BookAdmin)
 admin.site.register(Author,AuthorAdmin)
