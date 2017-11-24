@@ -3,7 +3,7 @@
 # @Time    : 2017/11/22 14:50
 # @Author  : Bone
 # @Site    : 
-# @File    : spider_jd.py
+# @File    : jd.py
 # @Software: PyCharm
 
 import re

@@ -3,7 +3,7 @@
 # @Time    : 2017/11/21 20:19
 # @Author  : Bone
 # @Site    : 
-# @File    : spider_douban.py
+# @File    : douban.py
 # @Software: PyCharm
 import re
 from collections import Set
@@ -35,7 +35,10 @@ def douban_book_spider_url(bookurl):
     soup = bs(resp.text, 'lxml')
     bookname = soup.find('h1').text
     if soup.find('span',text=re.compile("ISBN"))==None:
-        bookisbn = soup.find('span', text=re.compile("统一书号")).next_sibling.string.strip()
+        if soup.find('span', text=re.compile("统一书号")) == None:
+            bookisbn = ''
+        else:
+            bookisbn = soup.find('span', text=re.compile("统一书号")).next_sibling.string.strip()
     else:
         bookisbn = soup.find('span', text=re.compile("ISBN")).next_sibling.string.strip()
 
@@ -110,6 +113,7 @@ def douban_book_spider_url(bookurl):
     print(bookname)
 
 def douban_book_spider_tag(tagurl,position=0):
+    print(tag_url, position)
     url_set = set()
     params = {'start': position, 'type': 'T'}
     resp = requests.get(url=tagurl, headers=headers, params=params)
@@ -122,6 +126,7 @@ def douban_book_spider_tag(tagurl,position=0):
         for tt in result:
             url_set.add(tt.get('href'))
     for bookurl in url_set:
+        print(bookurl, position)
         if not Book.objects.filter(book_douban_url=bookurl).exists():
             douban_book_spider_url(bookurl)
     position += 20

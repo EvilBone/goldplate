@@ -3,7 +3,7 @@
 # @Time    : 2017/11/23 20:45
 # @Author  : Bone
 # @Site    : 
-# @File    : spider_dangdang.py
+# @File    : dangdang.py
 # @Software: PyCharm
 
 import re
