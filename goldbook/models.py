@@ -46,6 +46,44 @@ class PlatPrice:
         self.price = price
         self.link = link
 
+class Book_AM(models.Model):
+    TYPE_CHOICES = (
+        (1, u'平装'),
+        (2, u'精装'),
+        (2, u'Kindle'),
+    )
+    am_isbn = models.CharField(max_length=50,validators='ISBN',null=True,blank=True)
+    am_name = models.CharField(max_length=500,verbose_name='书名',null=True,blank=True)
+    am_pub = models.CharField(max_length=200,verbose_name='出版信息',null=True,blank=True)
+    am_kindle  = models.BooleanField(verbose_name='Kindle',default=False)
+    am_uti_kindle = models.BooleanField(verbose_name='Kindle Unlimited',default=False)
+    am_kindle_pirce = models.FloatField(verbose_name='Kindle价格',null=True,blank=True)
+    am_paper_price = models.FloatField(verbose_name='纸质价格',null=True,blank=True)
+    am_type = models.IntegerField(verbose_name='装帧',null=True,blank=True,choices=TYPE_CHOICES)
+
+    class Meta:
+        verbose_name = 'am书'
+        verbose_name_plural='am书'
+
+class URLManager(models.Model):
+    STAT_CHOICES = (
+        (0, u'初始'),
+        (1, u'等待'),
+        (2, u'下载中'),
+        (3, u'完成'),
+        (4, u'异常'),
+    )
+    web_url = models.CharField(max_length=1000,verbose_name='URL')
+    web_plate = models.ForeignKey(Eplatform,verbose_name='平台')
+    handle_stat = models.IntegerField(verbose_name='处理状态',choices=STAT_CHOICES,default=0)
+    handle_time = models.DateTimeField(verbose_name='处理时间',auto_now=True)
+    handle_message = models.TextField(verbose_name='处理结果',null=True,blank=True)
+
+    class Meta:
+        verbose_name = 'URL'
+        verbose_name_plural = 'URL'
+
+
 # 书
 class Book(models.Model):
     book_isbn = models.CharField(max_length=20, verbose_name='ISBN')
